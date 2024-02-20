@@ -1,25 +1,38 @@
 <template>
-    <section>
-        Filter
-    </section>
-    <section>
-        <div class="controls">
-            <button>Refresh</button>
-            <router-link to="/register">Register as Coach</router-link>
-        </div>
-        <ul>
-            List of Coaches
-        </ul>
-        List of Coaches
-    </section>
+  <section>Filter</section>
+  <section>
+    <div class="controls">
+      <button>Refresh</button>
+      <router-link to="/register">Register as Coach</router-link>
+    </div>
+    <ul>
+      <coach-item v-for="coach in filteredCoaches" :key="coach.id" :id="coach.id" :first-name="coach.firstName" :last-name="coach.lastName" :rate="coach.hourlyRate" :areas="coach.areas"></coach-item>
+    </ul>
+  </section>
 </template>
 
 <script>
-export default {
+import CoachItem from "../../components/coaches/CoachItem.vue";
 
+export default {
+  components: { CoachItem },
+    computed: {
+        filteredCoaches() {
+            return this.$store.getters['coaches/coaches'];
+        }
+    }
 }
 </script>
 
-<style>
+<style scoped>
+ul {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
 
+.controls {
+  display: flex;
+  justify-content: space-between;
+}
 </style>
